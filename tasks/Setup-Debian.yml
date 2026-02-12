@@ -1,0 +1,51 @@
+---
+
+- name: Install System Prerequisites.
+  apt:
+    name:
+      - gnupg                   
+      - apt-transport-https    
+      - software-properties-common 
+      - ca-certificates
+    state: present
+
+# Download the GPG key to apt config directory
+
+- name: Download the GPG key to apt config directory.
+  get_url:
+    url: https://download.gluster.org/pub/gluster/glusterfs/{{ glusterfs_gpg_key_version }}/rsa.pub
+    dest: /usr/share/keyrings/glusterfs-archive-keyring.gpg
+    mode: '0644'
+
+# add the source list for glusterfs:
+
+- name: Get system architecture.
+  command: dpkg --print-architecture
+  register: deb_architecture
+  changed_when: false
+
+- name: Add GlusterFS Repository.
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/gluster.gpg] https://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/{{ ansible_distribution_major_version }}/{{ deb_architecture.stdout }}/apt {{ ansible_distribution_release }} main"
+    filename: gluster
+    state: present
+    update_cache: yes
+    register: glusterfs_deb_source_added
+
+- name: Ensure GlusterFS will reinstall if the DEB source was just added.
+  apt:
+    name:
+      - glusterfs-server
+      - glusterfs-client
+    state: absent
+  when: glusterfs_deb_source_added.changed
+  tags: ['skip_ansible_lint']
+
+  
+  - name: Install GlusterFS Server/Client.
+  apt:
+    name:
+      - glusterfs-server
+      - glusterfs-client
+    state: present
+    default_release: "{{ glusterfs_default_release }}"

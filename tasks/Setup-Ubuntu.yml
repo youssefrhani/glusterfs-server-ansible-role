@@ -1,0 +1,37 @@
+---
+
+- name: Install System Prerequisites.
+  apt:
+    name:
+      - gnupg                    
+      - apt-transport-https      
+      - software-properties-common
+      - ca-certificates
+    state: present
+
+- name: Add GlusterFS PPA.
+  apt_repository:
+    repo: ppa:gluster/glusterfs-{{ glusterfs_ppa_version }}
+    state: present
+    update_cache: yes
+    register: glusterfs_ppa_added
+
+
+- name: Ensure GlusterFS will reinstall if the DEB source was just added.
+  apt:
+    name:
+      - glusterfs-server
+      - glusterfs-client
+    state: absent 
+    when: glusterfs_ppa_added.changed
+  tags: ['skip_ansible_lint']
+  
+
+- name: Install glusterfs Server/Client.
+  apt:
+    name:
+      - glusterfs-server
+      - glusterfs-client
+    state: present
+    default_release: "{{ glusterfs_default_release }}"
+

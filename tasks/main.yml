@@ -1,0 +1,6 @@
+---
+# tasks file for glusterfs-server
+
+
+- name: Include OS-specific tasks
+  include_tasks: "Setup-{{ ansible_distribution }}.yml"
