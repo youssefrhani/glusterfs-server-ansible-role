@@ -1,18 +1,9 @@
 ---
-
-- name: Install System Prerequisites.
-  apt:
-    name:
-      - gnupg                    
-      - apt-transport-https      
-      - software-properties-common
-      - ca-certificates
-    update_cache: yes
-    state: present
   
 - name: Install glusterfs Server/Client.
   apt:
     name:
       - glusterfs-server
       - glusterfs-client
+    update_cache: yes
     state: present
