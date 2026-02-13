@@ -29,7 +29,7 @@
       - glusterfs_volumes | length > 0
       - inventory_hostname == item.1.split(':')[0]
 
-  - name: Configure GlusterFS Peers (Stop on Failure)
+  - name: Configure GlusterFS Peers.
     gluster.gluster.gluster_peer:
       state: present
       nodes: "{{ ansible_play_hosts | difference([inventory_hostname]) }}"
@@ -41,7 +41,7 @@
       name: "{{ item.name }}"
       replicas: "{{ item.replica | int }}"
       cluster: "{{ ansible_play_hosts }}"
-      bricks: "{ item.bricks }"
+      bricks: "{{ item.bricks }}"
       force: yes
       rebalance: yes
     loop: "{{ glusterfs_volumes }}"
