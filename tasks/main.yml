@@ -40,7 +40,6 @@
       state: present
       name: "{{ item.name }}"
       replicas: "{{ item.replica | int }}"
-      cluster: "{{ ansible_play_hosts }}"
       bricks: "{{ item.bricks }}"
       force: yes
       rebalance: yes
