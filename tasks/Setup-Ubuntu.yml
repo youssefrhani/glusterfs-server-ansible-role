@@ -14,7 +14,7 @@
     repo: ppa:gluster/glusterfs-{{ glusterfs_ppa_version }}
     state: present
     update_cache: yes
-    register: glusterfs_ppa_added
+  register: glusterfs_ppa_added
 
 
 - name: Ensure GlusterFS will reinstall if the DEB source was just added.
@@ -23,7 +23,7 @@
       - glusterfs-server
       - glusterfs-client
     state: absent 
-    when: glusterfs_ppa_added.changed
+  when: glusterfs_ppa_added.changed
   tags: ['skip_ansible_lint']
   
 
