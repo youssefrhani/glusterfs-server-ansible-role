@@ -7,6 +7,7 @@
       - apt-transport-https      
       - software-properties-common
       - ca-certificates
+    update_cache: yes
     state: present
 
 - name: Add GlusterFS PPA.
