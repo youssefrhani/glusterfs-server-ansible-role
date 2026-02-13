@@ -2,6 +2,21 @@
 
 glusterfs_daemon: glusterd
 
-# For Debian.
+# For Debian:
 glusterfs_gpg_key_version: "9"
 glusterfs_deb_version: "LATEST"
+
+
+# Set it to 'false' to only install binaries (no volumes configuration)
+glusterfs_run_configuration: true
+
+# Gluster Volumes Info:
+glusterfs_volumes: []
+
+# EXAMPLE CONFIGURATION (Copy this to your inventory):
+# glusterfs_volumes:
+#   - name: gv0
+#     replica: 3
+#     bricks:
+#       - "server1:/data/glusterfs/brick1/gv0"
+#       - "server2:/data/glusterfs/brick2/gv0"
