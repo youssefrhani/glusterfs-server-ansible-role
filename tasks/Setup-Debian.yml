@@ -7,6 +7,7 @@
       - apt-transport-https    
       - software-properties-common 
       - ca-certificates
+    update_cache: yes
     state: present
 
 # Download the GPG key to apt config directory
@@ -30,7 +31,7 @@
     filename: gluster
     state: present
     update_cache: yes
-    register: glusterfs_deb_source_added
+  register: glusterfs_deb_source_added
 
 - name: Ensure GlusterFS will reinstall if the DEB source was just added.
   apt:
