@@ -38,8 +38,8 @@
   - name: Create gluster volumes.
     gluster.gluster.gluster_volume:
       state: present
-      name: "{ item.name }"
-      replicas: "{ item.replica }"
+      name: "{{ item.name }}"
+      replicas: "{{ item.replica | int }}"
       cluster: "{{ ansible_play_hosts }}"
       bricks: "{ item.bricks }"
       force: yes
