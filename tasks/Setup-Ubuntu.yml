@@ -16,5 +16,3 @@
       - glusterfs-server
       - glusterfs-client
     state: present
-    default_release: "{{ glusterfs_default_release }}"
-
