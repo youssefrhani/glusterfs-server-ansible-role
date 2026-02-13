@@ -1,7 +1,5 @@
 ---
-# defaults file for glusterfs-server
 
----
 glusterfs_daemon: glusterd
 
 # For Ubuntu.
