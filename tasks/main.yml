@@ -2,10 +2,6 @@
 
 # Glusterfs installation :
 
-- name: DEBUG - Show me the volumes variable
-  debug:
-    var: glusterfs_volumes
-
 - name: Include OS-specific tasks.
   include_tasks: "Setup-{{ ansible_distribution }}.yml"
 
