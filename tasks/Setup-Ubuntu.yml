@@ -12,10 +12,11 @@
 
 - name: Add GlusterFS PPA.
   apt_repository:
-    repo: ppa:gluster/glusterfs-{{ glusterfs_ppa_version }}
+    repo: 'ppa:gluster/glusterfs-{{ glusterfs_ppa_version }}'
     state: present
-    update_cache: yes
+    update_cache: true
   register: glusterfs_ppa_added
+  when: glusterfs_ppa_use
 
 
 - name: Ensure GlusterFS will reinstall if the DEB source was just added.
