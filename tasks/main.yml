@@ -19,13 +19,15 @@
 
   - name: Ensure gluster brick directories exist.
     file:
-      path: "{{ item.1 }}"
+      path: "{{ item.1.split(':')[1] }}"
       state: directory         
       owner: root
       group: root
       mode: '0755'
     loop: "{{ glusterfs_volumes | subelements('bricks') }}"
-    when: glusterfs_volumes | length > 0
+    when: 
+      - glusterfs_volumes | length > 0
+      - inventory_hostname == item.1.split(':')[0]
 
   - name: Configure GlusterFS Peers (Stop on Failure)
     gluster.gluster.gluster_peer:
@@ -34,7 +36,7 @@
     run_once: true
 
   - name: Create gluster volumes.
-    gluster.gluster.glusterfs_volume:
+    gluster.gluster.gluster_volume:
       state: present
       name: "{ item.name }"
       replicas: "{ item.replica }"
