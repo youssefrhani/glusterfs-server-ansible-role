@@ -40,7 +40,7 @@
       state: present
       name: "{{ item.name }}"
       replicas: "{{ item.replica | int }}"
-      bricks: "{{ item.bricks }}"
+      bricks: "{{ item.bricks | join(',') }}"
       force: yes
       rebalance: yes
     loop: "{{ glusterfs_volumes }}"
