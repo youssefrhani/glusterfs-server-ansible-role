@@ -1,7 +1,7 @@
 galaxy_info:
-  author: your name
-  description: your role description
-  company: your company (optional)
+  author: Youssef RHANI
+  description: An Ansible role to set up a GlusterFS server, including installation, configuration, and volume management.
+  company: Youssef RHANI
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
