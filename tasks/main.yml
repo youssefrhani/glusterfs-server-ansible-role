@@ -19,7 +19,7 @@
 
   - name: Ensure gluster brick directories exist.
     file:
-      path: "{{ item.1.split(':')[1] }}"
+      path: "{{ item.1 }}"
       state: directory         
       owner: root
       group: root
@@ -27,7 +27,6 @@
     loop: "{{ glusterfs_volumes | subelements('bricks') }}"
     when: 
       - glusterfs_volumes | length > 0
-      - inventory_hostname == item.1.split(':')[0]
 
   - name: Configure GlusterFS Peers.
     gluster.gluster.gluster_peer:
@@ -40,7 +39,8 @@
       state: present
       name: "{{ item.name }}"
       replicas: "{{ item.replica | int }}"
-      bricks: "{{ item.bricks + [] }}"
+      bricks: "{{ item.bricks }}"
+      cluster: "{{ ansible_play_hosts}}"
       force: yes
       rebalance: yes
     loop: "{{ glusterfs_volumes }}"
