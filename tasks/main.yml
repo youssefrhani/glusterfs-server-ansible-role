@@ -42,6 +42,6 @@
       bricks: "{{ item.bricks }}"
       cluster: "{{ ansible_play_hosts}}"
       force: yes
-      rebalance: yes
+#     rebalance: yes
     loop: "{{ glusterfs_volumes }}"
     run_once: true
