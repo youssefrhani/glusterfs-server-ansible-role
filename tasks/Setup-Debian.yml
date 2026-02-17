@@ -27,7 +27,7 @@
 
 - name: Add GlusterFS Repository.
   apt_repository:
-    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/gluster.gpg] https://download.gluster.org/pub/gluster/glusterfs/LATEST/Debian/{{ ansible_distribution_major_version }}/{{ deb_architecture.stdout }}/apt {{ ansible_distribution_release }} main"
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/gluster.gpg] https://download.gluster.org/pub/gluster/glusterfs/{{ glusterfs_deb_version }}/Debian/{{ ansible_distribution_major_version }}/{{ deb_architecture.stdout }}/apt {{ ansible_distribution_release }} main"
     filename: gluster
     state: present
     update_cache: yes
@@ -43,10 +43,9 @@
   tags: ['skip_ansible_lint']
 
   
-  - name: Install GlusterFS Server/Client.
+- name: Install GlusterFS Server/Client.
   apt:
     name:
       - glusterfs-server
       - glusterfs-client
     state: present
-    default_release: "{{ glusterfs_default_release }}"

@@ -16,7 +16,6 @@
 # Gluster Volumes set up :
 
 - block:
-
   - name: Ensure gluster brick directories exist.
     file:
       path: "{{ item.bricks }}"
@@ -25,8 +24,6 @@
       group: root
       mode: '0755'
     loop: "{{ glusterfs_volumes }}"
-    when: 
-      - glusterfs_volumes | length > 0
 
   - name: Configure GlusterFS Peers.
     gluster.gluster.gluster_peer:
@@ -45,3 +42,6 @@
 #     rebalance: yes
     loop: "{{ glusterfs_volumes }}"
     run_once: true
+  when:
+    - glusterfs_run_configuration | bool
+    - glusterfs_volumes | length > 0
